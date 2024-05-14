@@ -6,7 +6,6 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
 
 x, y = get_data()
 
@@ -14,9 +13,6 @@ x, y = get_data()
 scaling = StandardScaler()
 scaling.fit(x)
 scaled_data = scaling.transform(x)
-
-n_com = []
-score = []
 
 components = PCA(n_components=11)    
 dat_pca = pd.DataFrame(components.fit_transform(scaled_data))
@@ -27,15 +23,6 @@ clf = KNeighborsClassifier(n_neighbors=2)
 clf.fit(x_train, y_train)
 acc = clf.score(x_test, y_test)
 
-n_com.append(n)
-score.append(acc)
-
-
-plt.figure()
-plt.scatter(n_com, score)
-plt.title('PCA Dimension Reduction')
-plt.xlabel('Number of Components')
-plt.ylabel('Accuracy of KNN')
-plt.savefig('./fig/pca.png')
+print(acc)
 
 # From graph it seems the most optimal amount of components is 7
