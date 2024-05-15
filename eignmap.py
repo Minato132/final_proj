@@ -31,6 +31,9 @@ dat_scaled = scaling.fit_transform(x)
 
 # plt.figure()
 # plt.scatter(n_comp, score)
+# plt.title('Components vs Acc Under LEM')
+# plt.xlabel('Number of Components')
+# plt.ylabel('KNN Accuracy')
 # plt.savefig('./fig/eigen.png')
 
 # We found that 7 is a good number of components for spectralembedding thus we we will continue with this
@@ -53,4 +56,4 @@ for n in range(20):
 
 print(np.mean(score))
 
-# We get an avg accuracy of .8724
+#We get an avg accuracy of .8724

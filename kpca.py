@@ -35,6 +35,9 @@ dat_scaled = scaling.fit_transform(x)
 
 # plt.figure()
 # plt.scatter(n_comp, score)
+# plt.title('Components vs Acc Under KPCA')
+# plt.xlabel('Number of Components')
+# plt.ylabel('KNN Accuracy')
 # plt.savefig('./fig/kpca.png')
 
 # We found 7 to be a good value for kpca, time to test
