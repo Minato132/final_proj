@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn.manifold import LocallyLinearEmbedding
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -40,15 +40,24 @@ dat_scaled = scaler.fit_transform(x)
 embedd = LocallyLinearEmbedding(n_components=11)
 dat_embedd = pd.DataFrame(embedd.fit_transform(dat_scaled))
 
-score = []
+# score = []
 
-for n in range(20):
-    x_train, x_test, y_train, y_test = train_test_split(dat_embedd, y, test_size=.2)
+# for n in range(20):
+#     x_train, x_test, y_train, y_test = train_test_split(dat_embedd, y, test_size=.2)
     
-    clf = KNeighborsClassifier(n_neighbors=2)
-    clf.fit(x_train, y_train)
-    acc = clf.score(x_test, y_test)
-    score.append(acc)
+#     clf = KNeighborsClassifier(n_neighbors=2)
+#     clf.fit(x_train, y_train)
+#     acc = clf.score(x_test, y_test)
+#     score.append(acc)
 
-print(np.mean(score))
+# print(np.mean(score))
+
+
+#------------------------------
+# Using cross validation
+
+knn_cv = KNeighborsClassifier(n_neighbors = 2)
+cv_score = cross_val_score(knn_cv, dat_embedd, y, cv = 10)
+
+print(np.mean(cv_score))
     

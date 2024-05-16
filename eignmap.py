@@ -3,7 +3,7 @@
 from process import get_data
 import pandas as pd
 from sklearn.manifold import SpectralEmbedding
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
@@ -44,16 +44,24 @@ dat_scaled = scaling.fit_transform(x)
 embedd = SpectralEmbedding(n_components=7)
 dat_embedd = pd.DataFrame(embedd.fit_transform(dat_scaled))
 
-score = []
-for n in range(20):
-    x_train, x_test, y_train, y_test = train_test_split(dat_embedd, y, test_size=.2)
+# score = []
+# for n in range(20):
+#     x_train, x_test, y_train, y_test = train_test_split(dat_embedd, y, test_size=.2)
     
-    clf = KNeighborsClassifier(n_neighbors=2)
-    clf.fit(x_train, y_train)
-    acc = clf.score(x_test, y_test)
+#     clf = KNeighborsClassifier(n_neighbors=2)
+#     clf.fit(x_train, y_train)
+#     acc = clf.score(x_test, y_test)
 
-    score.append(acc)
+#     score.append(acc)
 
-print(np.mean(score))
+# print(np.mean(score))
 
 #We get an avg accuracy of .8724
+
+
+#------------------------------
+# Using cross valdiation
+
+knn_cv = KNeighborsClassifier(n_neighbors = 2)
+cv_score = cross_val_score(knn_cv, dat_embedd, y, cv= 10)
+print(np.mean(cv_score))

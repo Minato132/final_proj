@@ -3,7 +3,7 @@
 import pandas as pd
 from process import get_data
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.decomposition import KernelPCA
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
@@ -43,22 +43,30 @@ dat_scaled = scaling.fit_transform(x)
 # We found 7 to be a good value for kpca, time to test
 
 #---------------------------------------------------------
-
-score = []
+# Finding the average accuracy from KPCA
+# score = []
 kpca = KernelPCA(n_components=7)
 dat_kpca = pd.DataFrame(kpca.fit_transform(dat_scaled))
 
 
-for n in range(20):
-    x_train, x_test, y_train, y_test = train_test_split(dat_kpca, y)
+# for n in range(20):
+#     x_train, x_test, y_train, y_test = train_test_split(dat_kpca, y)
 
-    clf = KNeighborsClassifier(n_neighbors=2)
-    clf.fit(x_train, y_train)
-    acc = clf.score(x_test, y_test)   
+#     clf = KNeighborsClassifier(n_neighbors=2)
+#     clf.fit(x_train, y_train)
+#     acc = clf.score(x_test, y_test)   
     
-    score.append(acc)
+#     score.append(acc)
 
-print(np.mean(score))
+# print(np.mean(score))
+
+
+# ----------
+# Using crosss validation here
+
+knn_cv = KNeighborsClassifier(n_neighbors = 2)
+cv_scores = cross_val_score(knn_cv, dat_kpca, y, cv = 10)
+print(np.mean(cv_scores))
 
 
     
